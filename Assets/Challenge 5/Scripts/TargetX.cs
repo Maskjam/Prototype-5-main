@@ -15,8 +15,12 @@ public class TargetX : MonoBehaviour
     private float minValueY = -3.75f; // the y value of the center of the bottom-most square
     private float spaceBetweenSquares = 2.5f; // the distance between the centers of squares on the game board
     
+    private List<KeyCode> whatKeysCanBePressed;
+    int randomButtonIndex;
 
-    void Start()
+
+
+    void Awake()
     {
         rb = GetComponent<Rigidbody>();
         gameManagerX = GameObject.Find("Game Manager").GetComponent<GameManagerX>();
@@ -24,11 +28,17 @@ public class TargetX : MonoBehaviour
         transform.position = RandomSpawnPosition(); 
         StartCoroutine(RemoveObjectRoutine()); // begin timer before target leaves screen
 
+        whatKeysCanBePressed= new List<KeyCode>{KeyCode.Z, KeyCode.X, KeyCode.C, KeyCode.V, KeyCode.B};
+        randomButtonIndex = Random.Range(0, whatKeysCanBePressed.Count);
+        Debug.Log("Press" + whatKeysCanBePressed[randomButtonIndex].ToString());
     }
 
     // When target is clicked, destroy it, update score, and generate explosion
-    private void OnMouseDown()
+    private void GetKeydown()
     {
+        
+
+
         if (gameManagerX.isGameActive)
         {
             Destroy(gameObject);
